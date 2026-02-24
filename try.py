@@ -6,6 +6,7 @@ from datetime import datetime
 
 TASK_FILE = "tasks.json"
 
+
 class TaskManager:
     def __init__(self):
         self.tasks = self.load_tasks()
@@ -15,7 +16,7 @@ class TaskManager:
             file = open(TASK_FILE, "r")
             data = json.load(file)
             return data
-        except:
+        except BaseException:
             return {}
 
     def save_tasks(self):
@@ -27,7 +28,7 @@ class TaskManager:
         self.tasks[task_id] = {
             "title": title,
             "due": datetime.strptime(due_date, "%Y/%m/%d"),
-            "done": "False"
+            "done": "False",
         }
         print("Task added")
 
@@ -38,7 +39,9 @@ class TaskManager:
     def list_tasks(self):
         for t in self.tasks:
             task = self.tasks[t]
-            print(f"{t}. {task['title']} - Due: {task['due']} - Done: {task['done']}")
+            print(
+                f"{t}. {task['title']} - Due: {task['due']} - Done: {task['done']}")
+
 
 def main():
     manager = TaskManager()
@@ -69,5 +72,6 @@ def main():
 
         else:
             print("Invalid option")
+
 
 main()
